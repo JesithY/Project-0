@@ -1,10 +1,10 @@
 import { root } from "./elements.js";
 import { currentUser } from "../controller/firebase_auth.js";
-import { getAllPlayRecords } from "../controller/firestore_controller.js";
+import { erasePlayHistory, displayAll } from "../controller/firestore_controller.js";
 import { protectedView } from "./protected_view.js";
 import { DEV } from "../model/constants.js";
 
-export  async function PlayHistoryPageView()
+export  async function Ph_PageView()
 {
     if(!currentUser)
     {
@@ -20,9 +20,12 @@ export  async function PlayHistoryPageView()
     root.innerHTML='';
     root.appendChild(divWrapper);
 
+    let erase = document.getElementById('erase');
+    erase.onclick = eraseHistory;
+
     let playRecords;
     try{
-        playRecords = await getAllPlayRecords(currentUser.email);
+        playRecords = await displayAll(currentUser.email);
     
     }catch(e)
     {
@@ -40,18 +43,18 @@ export  async function PlayHistoryPageView()
         `;
     }else
     {
-    playRecords.forEach(record =>tbody.appendChild(buildOnePlayRecordView(record)));
+    playRecords.forEach((record, pos) =>tbody.appendChild(displayPlayHistory(record, pos+1)));
     }
 
 }
 
-function buildOnePlayRecordView(record)
+
+function displayPlayHistory(record, pos)
 {
- let i = 1;
  const tr= document.createElement('tr');
  tr.innerHTML=`
     <td>
-        ${i}
+        ${pos}
     </td>
     <td>
         ${record.bet}
@@ -68,4 +71,9 @@ function buildOnePlayRecordView(record)
  `;
     ;
  return tr; 
+}
+
+export async function eraseHistory(){
+    erasePlayHistory(currentUser.email);
+    Ph_PageView();
 }

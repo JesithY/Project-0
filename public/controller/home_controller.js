@@ -2,7 +2,7 @@ import { game, updateWindow,setCurrentChallenge, homePageView,} from "../view/ho
 import { GameState } from "../model/card_game.js";
 import { currentUser } from "./firebase_auth.js";
 import { DEV } from "../model/constants.js";
-import { addCardGameRecord } from "./firestore_controller.js";
+import { pushRecords } from "./firestore_controller.js";
 
 export function up_challenge(event, position, type) {
     const element = event.target.closest('div').querySelector('.span');
@@ -38,7 +38,7 @@ export function up_challenge(event, position, type) {
     setCurrentChallenge(game.totalChallenge);
 
 }
-export function onClickNewGame(e) {
+export function StartNewGame(e) {
     if(game.bal>0)
     {
         game.reset();
@@ -47,14 +47,16 @@ export function onClickNewGame(e) {
     updateWindow();
 
 }
-export function onClickRestartGame(e) {
+export async function RestartAgain(e) {
     game.reset();
     game.bal = game.restartAppBalance;
     homePageView();
+    //let s = game.restart;
+    await storeRestartRecord();
     updateWindow();
 }
 
-export async function savePlayRecord() {
+export async function storeRecords() {
     const blnc = game.bal ;
     const challenge = game.totalChallenge;
     const email = currentUser.email;
@@ -70,7 +72,7 @@ export async function savePlayRecord() {
 
 
     try {
-        await addCardGameRecord(playRecord);
+        await pushRecords(playRecord);
     } catch (e) {
         if (DEV) console.log('failed to save play record', e);
         alert(`Failed to save: ${JSON.stringify(e)}`);
@@ -80,11 +82,36 @@ export async function savePlayRecord() {
 
 }
 
-export async function onClickPlayGame(e) {
+export async function startGame(e) {
     game.gameState= GameState.DONE;
     game.setWinner();
-    await savePlayRecord();
+    await storeRecords();
     updateWindow();
     
+
+}
+export async function storeRestartRecord() {
+    const blnc = game.restartAppBalance ;
+    const challenge =  "App restart";
+    const email = currentUser.email;
+    const restartApp = true;
+    const timeStamp = Date.now();
+    const won= '';
+    const playRecord = { balance: blnc,bet: challenge,email, restart: restartApp, timestamp: timeStamp, won };
+
+    const div = document.createElement('div');
+    div.classList.add('text-white', 'bg-primary');
+    div.textContent = 'Saving to Firestore ...';
+    document.getElementById('message').appendChild(div);
+
+
+    try {
+        await pushRecords(playRecord);
+    } catch (e) {
+        if (DEV) console.log('failed to save play record', e);
+        alert(`Failed to save: ${JSON.stringify(e)}`);
+    }
+
+    div.remove();
 
 }

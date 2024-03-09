@@ -1,7 +1,7 @@
 import { currentUser } from "../controller/firebase_auth.js";
 import { root } from "./elements.js";
 import { protectedView } from "./protected_view.js";
-import { onClickPlayGame, onClickNewGame, up_challenge as up_challenge, onClickRestartGame } from "../controller/home_controller.js";
+import { startGame, StartNewGame, up_challenge as up_challenge, RestartAgain } from "../controller/home_controller.js";
 import { card_game } from "../model/card_game.js";
 import { GameState } from "../model/card_game.js";
 
@@ -26,7 +26,7 @@ export async function homePageView() {
     const divWrapper = document.createElement('div');
     divWrapper.innerHTML = await response.text();
     divWrapper.classList.add('m-4', 'p-4');
-    ``
+    
     root.innerHTML = '';
     root.appendChild(divWrapper);
 
@@ -45,9 +45,9 @@ export async function homePageView() {
             up_challenge(event, i, 'decrease');
         });
     }
-    newgame.onclick = onClickNewGame;
-    play.onclick =onClickPlayGame;
-    restartApp.onclick =onClickRestartGame;   
+    newgame.onclick = StartNewGame;
+    play.onclick =startGame;
+    restartApp.onclick =RestartAgain;   
     updateWindow();
 }
 
@@ -59,7 +59,6 @@ export function setBal()
 
 export function updateWindow() {
     const buttons = document.querySelectorAll('.button');
-    const data = document.getElementById('data1');
     let allImages = document.querySelectorAll('.img-fluid');
     const newgame = document.getElementById('newgame');  
     const restartApp = document.getElementById("restartapp");

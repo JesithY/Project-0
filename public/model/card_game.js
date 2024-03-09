@@ -6,7 +6,7 @@ export class card_game {
 
     constructor() {
 
-        this.totalcardsCount=3;
+        this.totalcardsCount = 3;
         this.restartAppBalance=15;
         this.bal = 15;
         this.totalChallenge = 0;
