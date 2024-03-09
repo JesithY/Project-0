@@ -1,14 +1,14 @@
 import { homePageView } from "../view/home_page.js"
-import { Menu2PageView } from "../view/menu2_page.js"
+import { PlayHistoryPageView } from "../view/playhistory_page.js"
 
 export const routePathnames = {
     HOME: '/',
-    MENU2: '/menu2',
+    PLAYHISTORY: '/playhistory',
 }
 
 export const routes = [
     {path: routePathnames.HOME, page: homePageView},
-    {path: routePathnames.MENU2, page: Menu2PageView}
+    {path: routePathnames.PLAYHISTORY, page: PlayHistoryPageView}
 ];
 
 export function routing(pathname, hash) {

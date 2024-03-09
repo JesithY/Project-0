@@ -1,11 +1,42 @@
-<h1>Computer Square</h1>
-<form>
-    <div class="form-group">
-        <label for="number">Enter a number:</label>
-        <input type="number" name="number" id="number"
-        required min="1" max="100" class="form-control"
-        placeholder="Enter a number 1 ~ 100">
+
+<h1>Where is the FireBase?</h1>
+<div id="message" class="fs-3 text-white bg-success bg-opacity-22">Message Area</div>
+  <div class="container mt-3">
+    <div class="row">
+      <div id="bal" class="col-6 text-white bg-primary text-left py-1">Message Area</div>
+      <div id="challenge" class="col-6 text-white bg-success text-left py-1">Message Area</div>
     </div>
-    <button type="submit" class="btn btn-outline-primary">Submit</button>
-</form>
-<ul id="display" class="bg-success bg-opacity-25"></ul>
+  </div>
+  <div class="py-3">SECRET: Firebase card Location :<span id="location"> 0 </span></div>
+
+  <div class="row">
+    <div class="col-4 text-start">
+        <button id="image1" value="btn0"><img src="/images/hidden.jpg" class="img-fluid" width="150" height="250"></button>
+        <div>
+            <button id="dec" class = "btn btn-outline-primary me-2 button dec"> - </button><span class="span"> 0 </span>      
+            <button id="inc" class = "btn btn-outline-danger me-2 button inc"> + </button>
+        </div>
+        <button id="play" class = "btn btn-outline-primary mt-3 button">Play</button>
+        
+      </div>
+      <div class="col-4 text-start">
+        <button id="image2" value="btn0"><img src="/images/hidden.jpg" class="img-fluid" width="150" height="250"></button>
+        <div>
+            <button id="dec" class = "btn btn-outline-primary me-2 button dec"> - </button><span class="span"> 0 </span>      
+            <button id="inc" class = "btn btn-outline-danger me-2 button inc"> + </button>
+        </div>
+        <button id="newgame" class = "btn btn-outline-danger mt-3 button">New Game</button>
+        
+      </div>
+      <div class="col-4 text-start">
+        <button id="image3" value="btn0"><img src="/images/hidden.jpg" class="img-fluid" width="150" height="250"></button>
+        <div>
+            <button id="dec" class = "btn btn-outline-primary me-2 button dec"> - </button><span class="span"> 0 </span>      
+            <button id="inc" class = "btn btn-outline-danger me-2 button inc"> + </button>
+        </div>
+        <button id="restartapp" class = "btn btn-outline-success mt-3 button">Restart App</button>
+        
+      </div>
+      
+  </div>
+  
